@@ -263,6 +263,56 @@ const chatMessages=document.getElementById('chat-messages');
 function addMessage(txt,type){ const div=document.createElement('div'); div.className='chat-message '+type; div.textContent=txt; chatMessages.appendChild(div); chatMessages.scrollTop=chatMessages.scrollHeight; }
 chatSend.addEventListener('click',()=>{ const txt=chatInput.value.trim(); if(txt==='') return; addMessage(txt,'chat-user'); chatInput.value=''; setTimeout(()=>addMessage("Thanks! We'll respond soon.",'chat-bot'),600); });
 </script>
+<!-- Contact -->
+  <div class="contact" id="contact">
+    <h3>Contact Us</h3>
+    <p>Email: info@jharkhandtourism.com</p>
+    <p>Phone: +91 123 456 7890</p>
+  </div>
 
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Jharkhand Tourism. All Rights Reserved.
+  </footer>
+
+  <!-- Chat Box HTML -->
+  <div class="chat-box">
+    <h4>Chat with us</h4>
+    <div id="chat-messages" class="chat-messages"></div>
+    <input type="text" id="chat-input" placeholder="Type message...">
+    <button id="chat-send">Send</button>
+  </div>
+
+  <!-- Chat Box JS -->
+  <script>
+    const chatSend = document.getElementById('chat-send');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+
+    function addMessage(txt, type) {
+      const div = document.createElement('div');
+      div.className = 'chat-message ' + type;
+      div.textContent = txt;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    chatSend.addEventListener('click', () => {
+      const txt = chatInput.value.trim();
+      if (txt === '') return;
+      addMessage(txt, 'chat-user');
+      chatInput.value = '';
+      // Simulate bot reply
+      setTimeout(() => addMessage("Thanks! We'll respond soon.", 'chat-bot'), 600);
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        chatSend.click();
+      }
+    });
+  </script>
 </body>
 </html>
+
