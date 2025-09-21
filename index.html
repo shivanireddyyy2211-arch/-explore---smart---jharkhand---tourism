@@ -38,6 +38,8 @@ nav a:hover{background:#ddd;color:black;}
 .chat-message{padding:5px 8px;margin-bottom:5px;border-radius:10px;max-width:80%;word-wrap:break-word;}
 .chat-user{background:#3498db;color:#fff;align-self:flex-end;}
 .chat-bot{background:#bdc3c7;color:#2c3e50;align-self:flex-start;}
+footer a{text-decoration:none;color:#fff;}
+footer a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -117,9 +119,9 @@ nav a:hover{background:#ddd;color:black;}
 <section id="gallery" class="features">
 <h2>Photo Gallery & Virtual Tours</h2>
 <div class="gallery-container">
-<img src="images/ranchi_city.jpg" alt="Ranchi City">
-<img src="images/dassam_falls.jpg" alt="Dassam Falls">
-<img src="images/jagannath_temple.jpg" alt="Jagannath Temple">
+<img src="images/ranchi_city.jpg">
+<img src="images/dassam_falls.jpg">
+<img src="images/jagannath_temple.jpg">
 </div>
 </section>
 
@@ -173,11 +175,45 @@ Select spots and click "Generate Itinerary"
 <h3>Contact Us</h3>
 <p>Email: info@jharkhandtourism.com</p>
 <p>Phone: +91 123 456 7890</p>
+<p>Address: Jharkhand Tourism Office, Ranchi</p>
 </div>
 
 </div> <!-- container -->
 
-<footer>&copy; 2025 Jharkhand Tourism. All Rights Reserved.</footer>
+<!-- Updated Footer -->
+<footer>
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;max-width:1200px;margin:auto;padding:20px;color:#fff;">
+    <div style="flex:1;min-width:200px;margin:10px;">
+      <h3>About Jharkhand Tourism</h3>
+      <p>Smart digital platform to explore eco-tourism, heritage, festivals, and more in Jharkhand.</p>
+    </div>
+    <div style="flex:1;min-width:200px;margin:10px;">
+      <h3>Quick Links</h3>
+      <ul style="list-style:none;padding:0;">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#itinerary">Plan Trip</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div style="flex:1;min-width:200px;margin:10px;">
+      <h3>Contact Us</h3>
+      <p>Email: info@jharkhandtourism.com</p>
+      <p>Phone: +91 123 456 7890</p>
+      <p>Address: Jharkhand Tourism Office, Ranchi</p>
+    </div>
+    <div style="flex:1;min-width:200px;margin:10px;">
+      <h3>Follow Us</h3>
+      <a href="#" style="color:#fff;margin-right:10px;">Facebook</a>
+      <a href="#" style="color:#fff;margin-right:10px;">Twitter</a>
+      <a href="#" style="color:#fff;margin-right:10px;">Instagram</a>
+    </div>
+  </div>
+  <div style="text-align:center;padding:10px;border-top:1px solid rgba(255,255,255,0.3);margin-top:10px;">
+    &copy; 2025 Jharkhand Tourism. All Rights Reserved.
+  </div>
+</footer>
 
 <!-- Chat Box -->
 <div class="chat-box">
@@ -203,59 +239,99 @@ const mainViewer = new PhotoSphereViewer.Viewer({
 
 // Map & 360° Spots
 const spots = [
-{name:'Ranchi', coords:[23.3441,85.3096], img:'images/ranchi_360.jpg'},
-{name:'Jamshedpur', coords:[22.8046,86.2029], img:'images/jamshedpur_360.jpg'},
-{name:'Dhanbad', coords:[23.7957,86.4304], img:'images/dhanbad_360.jpg'}
+  {name:'Ranchi', coords:[23.3441,85.3096], img:'images/ranchi_360.jpg'},
+  {name:'Jamshedpur', coords:[22.8046,86.2029], img:'images/jamshedpur_360.jpg'},
+  {name:'Dhanbad', coords:[23.7957,86.4304], img:'images/dhanbad_360.jpg'}
 ];
+
 const map = L.map('map').setView([23.6102,85.2799],7);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
-spots.forEach(s=>{
-  const marker=L.marker(s.coords).addTo(map);
-  marker.on('click',()=>mainViewer.setPanorama(s.img));
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution:'&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+spots.forEach(s => {
+  const marker = L.marker(s.coords).addTo(map);
+  marker.on('click', () => mainViewer.setPanorama(s.img));
 });
 
 // Search & Filter
-const touristSpots = spots.concat([{ name:"Netarhat",type:"eco" }, { name:"Betla National Park",type:"eco" }, { name:"Dassam Falls",type:"eco" }]);
+const touristSpots = spots.concat([
+  { name:"Netarhat", type:"eco" },
+  { name:"Betla National Park", type:"eco" },
+  { name:"Dassam Falls", type:"eco" }
+]);
+
 const searchInput = document.getElementById('searchInput');
 const filterSelect = document.getElementById('filterSelect');
 const resultsContainer = document.getElementById('resultsContainer');
-function displayResults(){
+
+function displayResults() {
   const val = searchInput.value.toLowerCase();
   const filter = filterSelect.value;
-  resultsContainer.innerHTML="";
-  touristSpots.forEach(s=>{
-    if((s.name.toLowerCase().includes(val)) && (filter==='all'||s.type===filter)){
-      const card=document.createElement('div');
-      card.className='card';
-      card.innerHTML=<h3>${s.name}</h3>;
+  resultsContainer.innerHTML = "";
+  touristSpots.forEach(s => {
+    if ((s.name.toLowerCase().includes(val)) && (filter === 'all' || s.type === filter)) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = <h3>${s.name}</h3>;
       resultsContainer.appendChild(card);
     }
   });
 }
-searchInput.addEventListener('input',displayResults);
-filterSelect.addEventListener('change',displayResults);
+
+searchInput.addEventListener('input', displayResults);
+filterSelect.addEventListener('change', displayResults);
 displayResults();
 
 // Itinerary Planner
-document.getElementById('generateBtn').addEventListener('click',()=>{
-const selected=[...document.querySelectorAll("#spotForm input[name='spot']:checked")].map(cb=>cb.value);
-const content=document.getElementById('itineraryContent');
-if(selected.length===0){content.innerHTML="<p>Select spots first.</p>"; return;}
-content.innerHTML="";
-selected.forEach((s,i)=>{
-const div=document.createElement('div'); div.className='itinerary-box';
-div.innerHTML=<h4>Day ${i+1}: ${s}</h4><p>Estimated travel: 1-2 hrs</p>;
-content.appendChild(div);
-});
+document.getElementById('generateBtn').addEventListener('click', () => {
+  const selected = [...document.querySelectorAll("#spotForm input[name='spot']:checked")].map(cb => cb.value);
+  const content = document.getElementById('itineraryContent');
+  if (selected.length === 0) {
+    content.innerHTML = "<p>Select spots first.</p>";
+    return;
+  }
+  content.innerHTML = "";
+  selected.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'itinerary-box';
+    div.innerHTML = <h4>Day ${i+1}: ${s}</h4><p>Estimated travel: 1-2 hrs</p>;
+    content.appendChild(div);
+  });
 });
 
 // Chat Box
-const chatSend=document.getElementById('chat-send');
-const chatInput=document.getElementById('chat-input');
-const chatMessages=document.getElementById('chat-messages');
-function addMessage(txt,type){ const div=document.createElement('div'); div.className='chat-message '+type; div.textContent=txt; chatMessages.appendChild(div); chatMessages.scrollTop=chatMessages.scrollHeight; }
-chatSend.addEventListener('click',()=>{ const txt=chatInput.value.trim(); if(txt==='') return; addMessage(txt,'chat-user'); chatInput.value=''; setTimeout(()=>addMessage("Thanks! We'll respond soon.",'chat-bot'),600); });
+const chatSend = document.getElementById('chat-send');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+
+function addMessage(txt, type) {
+  const div = document.createElement('div');
+  div.className = 'chat-message ' + type;
+  div.textContent = txt;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+chatSend.addEventListener('click', () => {
+  const txt = chatInput.value.trim();
+  if (txt === '') return;
+  addMessage(txt, 'chat-user');
+  chatInput.value = '';
+  setTimeout(() => addMessage("Thanks! We'll respond soon.", 'chat-bot'), 600);
+});
 </script>
 
 </body>
 </html>
+ 
+ 
+
+ 
+ 
+   
+ 
+ 
+  
+  
+ 
