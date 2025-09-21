@@ -38,8 +38,6 @@ nav a:hover{background:#ddd;color:black;}
 .chat-message{padding:5px 8px;margin-bottom:5px;border-radius:10px;max-width:80%;word-wrap:break-word;}
 .chat-user{background:#3498db;color:#fff;align-self:flex-end;}
 .chat-bot{background:#bdc3c7;color:#2c3e50;align-self:flex-start;}
-footer a{text-decoration:none;color:#fff;}
-footer a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -74,7 +72,7 @@ footer a:hover{text-decoration:underline;}
 <div class="main">
 <div class="login-box">
 <h2>Login</h2>
-<input type="text" placeholder="Username">
+<input type="email" placeholder="Email">
 <input type="password" placeholder="Password">
 <button>Login</button>
 </div>
@@ -175,45 +173,11 @@ Select spots and click "Generate Itinerary"
 <h3>Contact Us</h3>
 <p>Email: info@jharkhandtourism.com</p>
 <p>Phone: +91 123 456 7890</p>
-<p>Address: Jharkhand Tourism Office, Ranchi</p>
 </div>
 
 </div> <!-- container -->
 
-<!-- Updated Footer -->
-<footer>
-  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;max-width:1200px;margin:auto;padding:20px;color:#fff;">
-    <div style="flex:1;min-width:200px;margin:10px;">
-      <h3>About Jharkhand Tourism</h3>
-      <p>Smart digital platform to explore eco-tourism, heritage, festivals, and more in Jharkhand.</p>
-    </div>
-    <div style="flex:1;min-width:200px;margin:10px;">
-      <h3>Quick Links</h3>
-      <ul style="list-style:none;padding:0;">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#itinerary">Plan Trip</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-    <div style="flex:1;min-width:200px;margin:10px;">
-      <h3>Contact Us</h3>
-      <p>Email: info@jharkhandtourism.com</p>
-      <p>Phone: +91 123 456 7890</p>
-      <p>Address: Jharkhand Tourism Office, Ranchi</p>
-    </div>
-    <div style="flex:1;min-width:200px;margin:10px;">
-      <h3>Follow Us</h3>
-      <a href="#" style="color:#fff;margin-right:10px;">Facebook</a>
-      <a href="#" style="color:#fff;margin-right:10px;">Twitter</a>
-      <a href="#" style="color:#fff;margin-right:10px;">Instagram</a>
-    </div>
-  </div>
-  <div style="text-align:center;padding:10px;border-top:1px solid rgba(255,255,255,0.3);margin-top:10px;">
-    &copy; 2025 Jharkhand Tourism. All Rights Reserved.
-  </div>
-</footer>
+<footer>&copy; 2025 Jharkhand Tourism. All Rights Reserved.</footer>
 
 <!-- Chat Box -->
 <div class="chat-box">
@@ -223,9 +187,8 @@ Select spots and click "Generate Itinerary"
 <button id="chat-send">Send</button>
 </div>
 
-<!-- Leaflet JS -->
+<!-- JS Libraries -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- PhotoSphereViewer JS -->
 <script src="https://unpkg.com/three/build/three.min.js"></script>
 <script src="https://unpkg.com/photo-sphere-viewer@4/dist/photo-sphere-viewer.js"></script>
 
@@ -237,64 +200,61 @@ const mainViewer = new PhotoSphereViewer.Viewer({
   navbar:['zoom','fullscreen']
 });
 
-// Map & 360° Spots
+// Map & Spots
 const spots = [
-  {name:'Ranchi', coords:[23.3441,85.3096], img:'images/ranchi_360.jpg'},
-  {name:'Jamshedpur', coords:[22.8046,86.2029], img:'images/jamshedpur_360.jpg'},
-  {name:'Dhanbad', coords:[23.7957,86.4304], img:'images/dhanbad_360.jpg'}
+{name:'Ranchi', coords:[23.3441,85.3096], img:'images/ranchi_360.jpg', type:'cultural'},
+{name:'Jamshedpur', coords:[22.8046,86.2029], img:'images/jamshedpur_360.jpg', type:'eco'},
+{name:'Dhanbad', coords:[23.7957,86.4304], img:'images/dhanbad_360.jpg', type:'adventure'},
+{name:'Netarhat', coords:[23.4319,84.7913], img:'images/netarhat_360.jpg', type:'eco'},
+{name:'Betla National Park', coords:[23.5445,84.0499], img:'images/betla_360.jpg', type:'eco'},
+{name:'Dassam Falls', coords:[23.3470,85.3391], img:'images/dassam_360.jpg', type:'eco'}
 ];
 
 const map = L.map('map').setView([23.6102,85.2799],7);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution:'&copy; OpenStreetMap contributors'
-}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
 
-spots.forEach(s => {
-  const marker = L.marker(s.coords).addTo(map);
-  marker.on('click', () => mainViewer.setPanorama(s.img));
+// Markers & 360° click
+spots.forEach(s=>{
+  const marker = L.marker(s.coords).addTo(map).bindPopup(s.name);
+  marker.on('click', ()=> mainViewer.setPanorama(s.img));
 });
 
 // Search & Filter
-const touristSpots = spots.concat([
-  { name:"Netarhat", type:"eco" },
-  { name:"Betla National Park", type:"eco" },
-  { name:"Dassam Falls", type:"eco" }
-]);
-
 const searchInput = document.getElementById('searchInput');
 const filterSelect = document.getElementById('filterSelect');
 const resultsContainer = document.getElementById('resultsContainer');
 
-function displayResults() {
+function displayResults(){
   const val = searchInput.value.toLowerCase();
   const filter = filterSelect.value;
   resultsContainer.innerHTML = "";
-  touristSpots.forEach(s => {
-    if ((s.name.toLowerCase().includes(val)) && (filter === 'all' || s.type === filter)) {
+  spots.forEach(s=>{
+    if((s.name.toLowerCase().includes(val)) && (filter==='all' || s.type===filter)){
       const card = document.createElement('div');
       card.className = 'card';
-      card.innerHTML = <h3>${s.name}</h3>;
+      card.innerHTML = <h3>${s.name}</h3><p>Type: ${s.type}</p>;
       resultsContainer.appendChild(card);
     }
   });
 }
 
 searchInput.addEventListener('input', displayResults);
-filterSelect.addEventListener('change', displayResults);
+filterSelect.addEventListener
+  ('change', displayResults);
 displayResults();
 
 // Itinerary Planner
-document.getElementById('generateBtn').addEventListener('click', () => {
-  const selected = [...document.querySelectorAll("#spotForm input[name='spot']:checked")].map(cb => cb.value);
+document.getElementById('generateBtn').addEventListener('click',()=>{
+  const selected = [...document.querySelectorAll("#spotForm input[name='spot']:checked")].map(cb=>cb.value);
   const content = document.getElementById('itineraryContent');
-  if (selected.length === 0) {
+  if(selected.length===0){
     content.innerHTML = "<p>Select spots first.</p>";
     return;
   }
   content.innerHTML = "";
-  selected.forEach((s, i) => {
+  selected.forEach((s,i)=>{
     const div = document.createElement('div');
-    div.className = 'itinerary-box';
+    div.className='itinerary-box';
     div.innerHTML = <h4>Day ${i+1}: ${s}</h4><p>Estimated travel: 1-2 hrs</p>;
     content.appendChild(div);
   });
@@ -305,7 +265,7 @@ const chatSend = document.getElementById('chat-send');
 const chatInput = document.getElementById('chat-input');
 const chatMessages = document.getElementById('chat-messages');
 
-function addMessage(txt, type) {
+function addMessage(txt,type){
   const div = document.createElement('div');
   div.className = 'chat-message ' + type;
   div.textContent = txt;
@@ -313,13 +273,14 @@ function addMessage(txt, type) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-chatSend.addEventListener('click', () => {
+chatSend.addEventListener('click', ()=>{
   const txt = chatInput.value.trim();
-  if (txt === '') return;
-  addMessage(txt, 'chat-user');
-  chatInput.value = '';
-  setTimeout(() => addMessage("Thanks! We'll respond soon.", 'chat-bot'), 600);
+  if(txt==='') return;
+  addMessage(txt,'chat-user');
+  chatInput.value='';
+  setTimeout(()=> addMessage("Thanks! We'll respond soon.",'chat-bot'),600);
 });
+
 </script>
 
 </body>
@@ -335,3 +296,4 @@ chatSend.addEventListener('click', () => {
   
   
  
+
