@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,260 +8,180 @@
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
 <!-- PhotoSphereViewer CSS -->
 <link rel="stylesheet" href="https://unpkg.com/photo-sphere-viewer@4/dist/photo-sphere-viewer.css">
 
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
-  body { background:#f4f6f8; color:#333; }
-
-  header { display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#2c3e50; color:#fff; }
-  .language-selector select { padding:5px; border-radius:4px; }
-
-  nav { background:#333; overflow:hidden; }
-  nav a { color:white; padding:12px 20px; text-decoration:none; display:inline-block; }
-  nav a:hover { background:#ddd; color:black; }
-
-  .container { width:90%; max-width:1200px; margin:auto; padding:20px; }
-
-  .main { display:flex; gap:20px; margin-bottom:30px; }
-  .login-box { width:250px; padding:20px; background:#ecf0f1; border-radius:10px; }
-  .login-box h2 { margin-bottom:10px; color:#2c3e50; }
-  .login-box input, .login-box button { width:100%; margin-bottom:10px; padding:8px; border-radius:5px; border:1px solid #ccc; }
-  .login-box button { background:#2c3e50; color:#fff; cursor:pointer; }
-
-  .hero { flex:1; display:flex; flex-direction:column; gap:20px; padding:10px; border-radius:10px; background:#fff; }
-  .hero h1 { font-size:2em; text-align:center; color:#34495e; }
-  .hero-content { display:flex; gap:20px; flex-wrap:wrap; }
-  #map, #viewer { flex:1; height:300px; border-radius:10px; }
-
-  .features, .tourist-attractions, .results { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; margin-top:10px; }
-  .feature, .attraction, .card, .itinerary-box { background:#fff; padding:15px; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
-
-  /* Horizontal slider for Features */
-  .features-slider-section {
-    position: relative;
-    margin-top: 30px;
-  }
-
-  .features-slider {
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    scroll-behavior: smooth;
-    padding: 10px 0;
-    -webkit-overflow-scrolling: touch; /* mobile smooth scrolling */
-  }
-
-  .feature-slide {
-    min-width: 300px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    flex-shrink: 0;
-  }
-
-  .prev-slide, .next-slide {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #2c3e50;
-    color: #fff;
-    border: none;
-    font-size: 24px;
-    padding: 6px 12px;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 10;
-  }
-  .prev-slide { left: 0; }
-  .next-slide { right: 0; }
-
-  /* Gallery */
-  .gallery-container { position:relative; overflow:hidden; border-radius:8px; }
-  .gallery-slides { display:flex; transition: transform 0.5s ease-in-out; }
-  .gallery-slides img { width:100%; height:250px; object-fit:cover; }
-  .gallery-prev, .gallery-next {
-    position:absolute; top:50%; transform:translateY(-50%);
-    background:rgba(0,0,0,0.6); color:#fff; border:none; font-size:24px; padding:6px 10px; cursor:pointer; border-radius:50%;
-  }
-  .gallery-prev { left:10px; } .gallery-next { right:10px; }
-
-  /* Chat Box */
-  .chat-box { position:fixed; bottom:20px; right:20px; width:260px; background:#ecf0f1; padding:10px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2); }
-  .chat-box h4 { margin-bottom:10px; }
-  .chat-messages { max-height:180px; overflow-y:auto; margin-bottom:5px; padding:5px; background:#fff; border-radius:5px; border:1px solid #ccc; display:flex; flex-direction:column; }
-  .chat-message { padding:5px 8px; margin-bottom:5px; border-radius:10px; max-width:80%; word-wrap:break-word; }
-  .chat-user { background:#3498db; color:#fff; align-self:flex-end; }
-  .chat-bot { background:#bdc3c7; color:#2c3e50; align-self:flex-start; }
-
-  .contact, footer { text-align:center; padding:15px; background:#2c3e50; color:#fff; border-radius:8px; margin:20px 0; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f4f6f8;color:#333;}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:#2c3e50;color:#fff;}
+.language-selector select{padding:5px;border-radius:4px;}
+nav{background:#333;overflow:hidden;}
+nav a{color:white;padding:12px 20px;text-decoration:none;display:inline-block;}
+nav a:hover{background:#ddd;color:black;}
+.container{width:90%;max-width:1200px;margin:auto;padding:20px;}
+.main{display:flex;gap:20px;margin-bottom:30px;}
+.login-box{width:250px;padding:20px;background:#ecf0f1;border-radius:10px;}
+.login-box h2{margin-bottom:10px;color:#2c3e50;}
+.login-box input,.login-box button{width:100%;margin-bottom:10px;padding:8px;border-radius:5px;border:1px solid #ccc;}
+.login-box button{background:#2c3e50;color:#fff;cursor:pointer;}
+.hero{flex:1;display:flex;flex-direction:column;gap:20px;padding:10px;border-radius:10px;background:#fff;}
+.hero h1{font-size:2em;text-align:center;color:#34495e;}
+.hero-content{display:flex;gap:20px;flex-wrap:wrap;}
+#map,#viewer{flex:1;height:300px;border-radius:10px;}
+.features,.tourist-attractions,.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:10px;}
+.feature,.attraction,.card,.itinerary-box{background:#fff;padding:15px;border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+.gallery-container{position:relative;overflow:hidden;border-radius:8px;}
+.gallery-slides{display:flex;transition: transform 0.5s ease-in-out;}
+.gallery-slides img{width:100%;height:250px;object-fit:cover;}
+.gallery-prev,.gallery-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);color:#fff;border:none;font-size:24px;padding:6px 10px;cursor:pointer;border-radius:50%;}
+.gallery-prev{left:10px;}.gallery-next{right:10px;}
+.chat-box{position:fixed;bottom:20px;right:20px;width:260px;background:#ecf0f1;padding:10px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
+.chat-box h4{margin-bottom:10px;}
+.chat-messages{max-height:180px;overflow-y:auto;margin-bottom:5px;padding:5px;background:#fff;border-radius:5px;border:1px solid #ccc;display:flex;flex-direction:column;}
+.chat-message{padding:5px 8px;margin-bottom:5px;border-radius:10px;max-width:80%;word-wrap:break-word;}
+.chat-user{background:#3498db;color:#fff;align-self:flex-end;}
+.chat-bot{background:#bdc3c7;color:#2c3e50;align-self:flex-start;}
+.contact,footer{text-align:center;padding:15px;background:#2c3e50;color:#fff;border-radius:8px;margin:20px 0;}
 </style>
 </head>
-
 <body>
+
 <header>
-  <h2>Smart Jharkhand Tourism</h2>
-  <div class="language-selector">
-    <select>
-      <option value="en">English</option>
-      <option value="hi">Hindi</option>
-      <option value="te">Telugu</option>
-    </select>
-  </div>
+<h2>Smart Jharkhand Tourism</h2>
+<div class="language-selector">
+<select>
+<option value="en">English</option>
+<option value="hi">Hindi</option>
+<option value="te">Telugu</option>
+</select>
+</div>
 </header>
 
 <nav>
-  <a href="#home">Home</a>
-  <a href="#features">Features</a>
-  <a href="#search-filter">Find Attractions</a>
-  <a href="#map-section">Interactive Map</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#events">Events</a>
-  <a href="#itinerary">Itinerary</a>
-  <a href="#attractions">Attractions</a>
-  <a href="#booking">Booking</a>
-  <a href="#contact">Contact</a>
+<a href="#home">Home</a>
+<a href="#features">Features</a>
+<a href="#search-filter">Find Attractions</a>
+<a href="#map-section">Interactive Map</a>
+<a href="#gallery">Gallery</a>
+<a href="#events">Events</a>
+<a href="#itinerary">Itinerary</a>
+<a href="#attractions">Attractions</a>
+<a href="#booking">Booking</a>
+<a href="#contact">Contact</a>
 </nav>
 
 <div class="container">
-  <!-- Main Section -->
-  <div class="main">
-    <div class="login-box">
-      <h2>Login</h2>
-      <input type="text" placeholder="Username">
-      <input type="password" placeholder="Password">
-      <button>Login</button>
-    </div>
-    <div class="hero" id="hero-section">
-      <h1>Discover Jharkhand</h1>
-      <div class="hero-content">
-        <div id="map"></div>
-        <div id="viewer"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Home / Intro -->
-  <section id="home" class="features">
-    <h2>Welcome to Jharkhand Tourism</h2>
-    <p>Explore eco-tourism, heritage sites, festivals, and plan your trip with our smart platform!</p>
-  </section>
-
-  <!-- Features - Horizontal Slide -->
-  <section id="features" class="features-slider-section">
-    <h2>Platform Features</h2>
-    <div class="features-slider">
-      <div class="feature-slide">
-        <h3>Interactive Maps</h3>
-        <p>Click markers to view 360° tours.</p>
-      </div>
-      <div class="feature-slide">
-        <h3>Virtual Tours</h3>
-        <p>Experience eco parks, sanctuaries, and heritage sites virtually.</p>
-      </div>
-      <div class="feature-slide">
-        <h3>Online Bookings</h3>
-        <p>Book tours and experiences easily online.</p>
-      </div>
-    </div>
-    <button class="prev-slide">‹</button>
-    <button class="next-slide">›</button>
-  </section>
-
-  <!-- Search & Filter -->
-  <section id="search-filter" class="features">
-    <h2>Find Attractions</h2>
-    <input type="text" id="searchInput" placeholder="Search by name...">
-    <select id="filterSelect">
-      <option value="all">All</option>
-      <option value="eco">Eco-tourism</option>
-      <option value="cultural">Cultural</option>
-      <option value="adventure">Adventure</option>
-    </select>
-    <div class="results" id="resultsContainer"></div>
-  </section>
-
-  <!-- Gallery & 360 Tours -->
-  <section id="gallery" class="features">
-    <h2>Photo Gallery & Virtual Tours</h2>
-    <div class="gallery-container">
-      <div class="gallery-slides">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Ranchi_city.jpg">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Dassam_Falls.jpg">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Jagannath_temple_Ranchi.jpg">
-      </div>
-      <button class="gallery-prev">‹</button>
-      <button class="gallery-next">›</button>
-    </div>
-  </section>
-
-  <!-- Event Calendar -->
-  <section id="events" class="features">
-    <h2>Upcoming Festivals & Events</h2>
-    <div class="feature">
-      <h3>Sarhul Festival</h3>
-      <p>Spring festival celebrated in tribal regions of Jharkhand.</p>
-    </div>
-    <div class="feature">
-      <h3>Karma Festival</h3>
-      <p>Tribal dance & rituals under sacred Karma tree.</p>
-    </div>
-    <div class="feature">
-      <h3>Chhath Puja</h3>
-      <p>Worship of Sun God on riverbanks.</p>
-    </div>
-  </section>
-
-  <!-- Itinerary Planner -->
-  <section id="itinerary" class="features">
-    <h2>Plan Your Trip</h2>
-    <div class="itinerary-box">
-      <h3>Select Spots</h3>
-      <form id="spotForm">
-        <label><input type="checkbox" name="spot" value="Netarhat"> Netarhat</label><br>
-        <label><input type="checkbox" name="spot" value="Betla National Park"> Betla National Park</label><br>
-        <label><input type="checkbox" name="spot" value="Dassam Falls"> Dassam Falls</label><br>
-      </form>
-      <button id="generateBtn">Generate Itinerary</button>
-    </div>
-    <div class="itinerary-box" id="itineraryContent">
-      Select spots and click "Generate Itinerary"
-    </div>
-  </section>
-
-  <!-- Top Attractions -->
-  <section id="attractions" class="tourist-attractions">
-    <h2>Top Tourist Attractions</h2>
-    <div class="attraction"><h3>Ranchi</h3><p>Capital city with waterfalls & culture.</p></div>
-    <div class="attraction"><h3>Betla National Park</h3><p>Renowned wildlife sanctuary with lush forests.</p></div>
-    <div class="attraction"><h3>Rajmahal Hills</h3><p>Scenic hills with cultural history.</p></div>
-  </section>
-
-  <!-- Booking -->
-  <section id="booking" class="features">
-    <h2>Book Your Tour</h2>
-    <form>
-      <label>Package:</label>
-      <select><option>Eco Tour</option><option>Cultural Tour</option><option>Combined</option></select><br><br>
-      <label>Email:</label>
-      <input type="email" required><br><br>
-      <input type="submit" value="Book Now">
-    </form>
-  </section>
-
-  <!-- Contact -->
-  <div class="contact" id="contact">
-    <h3>Contact Us</h3>
-    <p>Email: info@jharkhandtourism.com</p>
-    <p>Phone: +91 123 456 7890</p>
-  </div>
+<div class="main">
+<div class="login-box">
+<h2>Login</h2>
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+<button>Login</button>
+</div>
+<div class="hero" id="hero-section">
+<h1>Discover Jharkhand</h1>
+<div class="hero-content">
+<div id="map"></div>
+<div id="viewer"></div>
+</div>
+</div>
 </div>
 
-<!-- Footer -->
+<section id="home" class="features">
+<h2>Welcome to Jharkhand Tourism</h2>
+<p>Explore eco-tourism, heritage sites, festivals, and plan your trip with our smart platform!</p>
+</section>
+
+<section id="features" class="features">
+<h2>Platform Features</h2>
+<div class="feature"><h3>Interactive Maps</h3><p>Click markers to view 360° tours.</p></div>
+<div class="feature"><h3>Virtual Tours</h3><p>Experience eco parks, sanctuaries, and heritage sites virtually.</p></div>
+<div class="feature"><h3>Online Bookings</h3><p>Book tours and experiences easily online.</p></div>
+</section>
+
+<section id="search-filter" class="features">
+<h2>Find Attractions</h2>
+<input type="text" id="searchInput" placeholder="Search by name...">
+<select id="filterSelect">
+<option value="all">All</option>
+<option value="eco">Eco-tourism</option>
+<option value="cultural">Cultural</option>
+<option value="adventure">Adventure</option>
+</select>
+<div class="results" id="resultsContainer"></div>
+</section>
+
+<section id="gallery" class="features">
+<h2>Photo Gallery & Virtual Tours</h2>
+<div class="gallery-container">
+<div class="gallery-slides">
+<img src="images/ranchi_city.jpg">
+<img src="images/dassam_falls.jpg">
+<img src="images/jagannath_temple.jpg">
+</div>
+<button class="gallery-prev">‹</button>
+<button class="gallery-next">›</button>
+</div>
+</section>
+
+<section id="events" class="features">
+<h2>Upcoming Festivals & Events</h2>
+<div class="feature"><h3>Sarhul Festival</h3><p>Spring festival celebrated in tribal regions of Jharkhand.</p></div>
+<div class="feature"><h3>Karma Festival</h3><p>Tribal dance & rituals under sacred Karma tree.</p></div>
+<div class="feature"><h3>Chhath Puja</h3><p>Worship of Sun God on riverbanks.</p></div>
+</section>
+
+<section id="itinerary" class="features">
+<h2>Plan Your Trip</h2>
+<div class="itinerary-box">
+<h3>Select Spots</h3>
+<form id="spotForm">
+<label><input type="checkbox" name="spot" value="Netarhat"> Netarhat</label><br>
+<label><input type="checkbox" name="spot" value="Betla National Park"> Betla National Park</label><br>
+<label><input type="checkbox" name="spot" value="Dassam Falls"> Dassam Falls</label><br>
+</form>
+<button id="generateBtn">Generate Itinerary</button>
+</div>
+<div class="itinerary-box" id="itineraryContent">
+Select spots and click "Generate Itinerary"
+</div>
+</section>
+
+<div class="tourist-attractions">
+<h2>Top Tourist Attractions</h2>
+<div class="attraction"><h3>Ranchi</h3><p>Capital city with waterfalls & culture.</p></div>
+<div class="attraction"><h3>Betla National Park</h3><p>Renowned wildlife sanctuary with lush forests.</p></div>
+<div class="attraction"><h3>Rajmahal Hills</h3><p>Scenic hills with cultural history.</p></div>
+</div>
+
+<section id="booking" class="features">
+<h2>Book Your Tour</h2>
+<form>
+<label>Package:</label>
+<select><option>Eco Tour</option><option>Cultural Tour</option><option>Combined</option></select><br><br>
+<label>Email:</label>
+<input type="email" required><br><br>
+<input type="submit" value="Book Now">
+</form>
+</section>
+
+<div class="contact" id="contact">
+<h3>Contact Us</h3>
+<p>Email: info@jharkhandtourism.com</p>
+<p>Phone: +91 123 456 7890</p>
+</div>
+</div>
+
 <footer>&copy; 2025 Jharkhand Tourism. All Rights Reserved.</footer>
+
+<!-- Chat Box -->
+<div class="chat-box">
+<h4>Chat with us</h4>
+<div id="chat-messages" class="chat-messages"></div>
+<input type="text" id="chat-input" placeholder="Type message...">
+<button id="chat-send">Send</button>
+</div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -270,30 +190,28 @@
 <script src="https://unpkg.com/photo-sphere-viewer@4/dist/photo-sphere-viewer.js"></script>
 
 <script>
-// Main 360° Viewer
+// 360° Viewer
 const mainViewer = new PhotoSphereViewer.Viewer({
   container: document.getElementById('viewer'),
-  panorama: 'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg',
+  panorama: 'images/ranchi_360.jpg',
   navbar:['zoom','fullscreen']
 });
 
-// Map & spots
+// Map & 360° Spots
 const spots = [
-  { name:'Ranchi', coords:[23.3441,85.3096], img:'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg' },
-  { name:'Jamshedpur', coords:[22.8046,86.2029], img:'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg' },
-  { name:'Dhanbad', coords:[23.7957,86.4304], img:'https://photo-sphere-viewer-data.netlify.app/assets/sphere.jpg' },
+{name:'Ranchi', coords:[23.3441,85.3096], img:'images/ranchi_360.jpg'},
+{name:'Jamshedpur', coords:[22.8046,86.2029], img:'images/jamshedpur_360.jpg'},
+{name:'Dhanbad', coords:[23.7957,86.4304], img:'images/dhanbad_360.jpg'}
 ];
 const map = L.map('map').setView([23.6102,85.2799],7);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
 spots.forEach(s=>{
-  const marker = L.marker(s.coords).addTo(map);
+  const marker=L.marker(s.coords).addTo(map);
   marker.on('click',()=>mainViewer.setPanorama(s.img));
 });
 
 // Search & Filter
-const touristSpots = spots.concat([
-  { name:"Netarhat",type:"eco" }, { name:"Betla National Park",type:"eco" }, { name:"Dassam Falls",type:"eco" }
-]);
+const touristSpots = spots.concat([{ name:"Netarhat",type:"eco" }, { name:"Betla National Park",type:"eco" }, { name:"Dassam Falls",type:"eco" }]);
 const searchInput = document.getElementById('searchInput');
 const filterSelect = document.getElementById('filterSelect');
 const resultsContainer = document.getElementById('resultsContainer');
@@ -316,88 +234,35 @@ displayResults();
 
 // Gallery slider
 document.querySelectorAll(".gallery-container").forEach(container=>{
-  const slides=container.querySelector(".gallery-slides");
-  const prev=container.querySelector(".gallery-prev");
-  const next=container.querySelector(".gallery-next");
-  let idx=0;
-  function show(i){const t=slides.children.length; idx=(i+t)%t; slides.style.transform=translateX(-${idx*100}%);}
-  prev.addEventListener('click',()=>show(idx-1));
-  next.addEventListener('click',()=>show(idx+1));
-});
-
-// Features slider (click buttons + swipe)
-const featureSlider = document.querySelector('.features-slider');
-const prevFeature = document.querySelector('.prev-slide');
-const nextFeature = document.querySelector('.next-slide');
-const slideWidth = 320;
-
-prevFeature.addEventListener('click', () => {
-  featureSlider.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-});
-nextFeature.addEventListener('click', () => {
-  featureSlider.scrollBy({ left: slideWidth, behavior: 'smooth' });
-});
-
-// Swipe support
-let startX = 0;
-featureSlider.addEventListener('touchstart', (e) => { startX = e.touches[0].pageX; });
-featureSlider.addEventListener('touchmove', (e) => {
-  const x = e.touches[0].pageX;
-  featureSlider.scrollLeft -= (x - startX);
-  startX = x;
+const slides=container.querySelector(".gallery-slides");
+const prev=container.querySelector(".gallery-prev");
+const next=container.querySelector(".gallery-next");
+let idx=0;
+function show(i){const t=slides.children.length; idx=(i+t)%t; slides.style.transform=translateX(-${idx*100}%);}
+prev.addEventListener('click',()=>show(idx-1));
+next.addEventListener('click',()=>show(idx+1));
 });
 
 // Itinerary Planner
 document.getElementById('generateBtn').addEventListener('click',()=>{
-  const selected=[...document.querySelectorAll("#spotForm input[name='spot']:checked")].map(cb=>cb.value);
-  const content=document.getElementById('itineraryContent');
-  if(selected.length===0){content.innerHTML="<p>Select spots first.</p>"; return;}
-  content.innerHTML="";
-  selected.forEach((s,i)=>{
-    const div=document.createElement('div'); div.className='itinerary-box';
-    div.innerHTML=<h4>Day ${i+1}: ${s}</h4><p>Estimated travel: 1-2 hrs</p>;
-    content.appendChild(div);
-  });
+const selected=[...document.querySelectorAll("#spotForm input[name='spot']:checked")].map(cb=>cb.value);
+const content=document.getElementById('itineraryContent');
+if(selected.length===0){content.innerHTML="<p>Select spots first.</p>"; return;}
+content.innerHTML="";
+selected.forEach((s,i)=>{
+const div=document.createElement('div'); div.className='itinerary-box';
+div.innerHTML=<h4>Day ${i+1}: ${s}</h4><p>Estimated travel: 1-2 hrs</p>;
+content.appendChild(div);
+});
 });
 
- <!-- any section above -->
+// Chat Box
+const chatSend=document.getElementById('chat-send');
+const chatInput=document.getElementById('chat-input');
+const chatMessages=document.getElementById('chat-messages');
+function addMessage(txt,type){ const div=document.createElement('div'); div.className='chat-message '+type; div.textContent=txt; chatMessages.appendChild(div); chatMessages.scrollTop=chatMessages.scrollHeight; }
+chatSend.addEventListener('click',()=>{ const txt=chatInput.value.trim(); if(txt==='') return; addMessage(txt,'chat-user'); chatInput.value=''; setTimeout(()=>addMessage("Thanks! We'll respond soon.",'chat-bot'),600); });
+</script>
 
-    <!-- Chat Box HTML -->
-    <div class="chat-box">
-      <h4>Chat with us</h4>
-      <div id="chat-messages" class="chat-messages"></div>
-      <input type="text" id="chat-input" placeholder="Type message...">
-      <button id="chat-send">Send</button>
-    </div>
-
-    <!-- Footer (optional) -->
-    <footer>
-      <p>&copy; 2025 Smart Jharkhand Tourism</p>
-    </footer>
-    
-    <!-- JavaScript for chat box -->
-    <script>
-      const chatSend = document.getElementById('chat-send');
-      const chatInput = document.getElementById('chat-input');
-      const chatMessages = document.getElementById('chat-messages');
-
-      function addMessage(txt, type) {
-        const div = document.createElement('div');
-        div.className = 'chat-message ' + type;
-        div.textContent = txt;
-        chatMessages.appendChild(div);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-
-      chatSend.addEventListener('click', () => {
-        const txt = chatInput.value.trim();
-        if (txt === '') return;
-        addMessage(txt, 'chat-user');
-        chatInput.value = '';
-        // Simulate bot reply
-        setTimeout(() => addMessage("Thanks! We'll respond soon.", 'chat-bot'), 600);
-      });
-    </script>
-  </body>
-</html> 
-    
+</body>
+</html>
